@@ -13,9 +13,6 @@ export class TextComponent {
 
   @HostListener('document:keydown', ['$event'])
   addKeyListeners(event: KeyboardEvent): void {
-    console.log('current: ', this.currentChar);
-    console.log(event.key);
-
     if (event.key === this.currentChar) {
       this.textToDisplay += this.currentChar;
       this.currentChar = this.fullText.charAt(this.textToDisplay.length);
