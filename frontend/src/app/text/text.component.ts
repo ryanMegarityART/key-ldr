@@ -1,32 +1,24 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-text',
   templateUrl: './text.component.html',
-  styleUrls: ['./text.component.css']
+  styleUrls: ['./text.component.css'],
 })
-export class TextComponent implements AfterViewInit {
-
-  fullText: string = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
-  textToDisplay: string = this.fullText.charAt(0);
+export class TextComponent {
+  fullText: string =
+    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
+  textToDisplay: string = '';
   currentChar: string = this.fullText.charAt(0);
 
-  ngAfterViewInit(): void {
-    // this.addKeyListeners();
-  }
+  @HostListener('document:keydown', ['$event'])
+  addKeyListeners(event: KeyboardEvent): void {
+    console.log('current: ', this.currentChar);
+    console.log(event.key);
 
-  addKeyListeners(): void {
-    console.log(this.currentChar);
-    document.onkeydown = (event: KeyboardEvent) => {
-
-      console.log(event.key);
-      console.log(this.currentChar);
-
-      if (event.key === this.currentChar) {
-        this.textToDisplay += this.currentChar;
-        this.currentChar = this.fullText.charAt(this.textToDisplay.length); 
-      }
-    
-    };
+    if (event.key === this.currentChar) {
+      this.textToDisplay += this.currentChar;
+      this.currentChar = this.fullText.charAt(this.textToDisplay.length);
+    }
   }
 }
